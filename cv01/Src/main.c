@@ -18,6 +18,8 @@
  */
 
 #include <stdint.h>
+#include <stm32f0xx.h>
+
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -25,6 +27,42 @@
 
 int main(void)
 {
-    /* Loop forever */
-	for(;;);
+	uint32_t sos = 0b10101001110111011100101010000000;
+	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+	GPIOA->MODER |= GPIO_MODER_MODER5_0;
+
+	//while(1)
+	//{
+	//	GPIOA->BSRR = (1<<5);
+	//	for (volatile uint32_t i = 0; i < 100000; i++) {}
+	//	GPIOA->BRR = (1<<5);
+	//	for (volatile uint32_t i = 0; i < 100000; i++) {}
+
+	//}
+
+    while(1){
+    	for(uint32_t i= 0; i<32; i++)
+    	{
+    		if (sos & 0b1){
+    			GPIOA->BSRR = (1<<5);
+    		}
+    		else{
+
+    			GPIOA->BRR = (1<<5);
+    		}
+
+
+
+    	}
+
+
+
+
+    }
+
+
+
+
+
+
 }
