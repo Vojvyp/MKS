@@ -18,7 +18,7 @@
  */
 
 #include <stdint.h>
-#include <stm32f0xx.h>
+#include "stm32f0xx.h"
 
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
@@ -40,10 +40,10 @@ int main(void)
 
 	//}
 
-    while(1){
+   for(;;){
     	for(uint32_t i= 0; i<32; i++)
     	{
-    		if (sos & 0b1){
+    		if (sos & (1<<(31-i))){
     			GPIOA->BSRR = (1<<5);
     		}
     		else{
@@ -51,8 +51,7 @@ int main(void)
     			GPIOA->BRR = (1<<5);
     		}
 
-
-
+    		for (volatile uint32_t i = 0; i < 100000; i++) {}
     	}
 
 
